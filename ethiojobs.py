@@ -5,9 +5,11 @@ from bs4 import BeautifulSoup
 from datetime import datetime
 from telebot.types import InlineKeyboardMarkup,InlineKeyboardButton
 from constants import API_KEY
+import prettytable as pt
 from telegram import ParseMode
 from telegram.ext import *
 import requests
+import json
 bot = telebot.TeleBot(API_KEY,parse_mode=None)
 headers ={'User-Agent':'Mozilla/5.0 (X11; Linux x86_64; rv:101.0) Gecko/20100101 Firefox/101.0'}
 
@@ -71,17 +73,18 @@ def generate_info(lin,user_id,k):
 
 @bot.message_handler(commands=['start','jobcategory'])
 def send_welcome(msg):
-    markup = types.ReplyKeyboardMarkup(row_width=1)
+    markup = types.ReplyKeyboardMarkup(row_width=2)
     btn1 = types.KeyboardButton("/jobcategory")
     btn3 = types.KeyboardButton("/help")
+    markup.add(btn1,btn3)
     bot.reply_to(msg,"loading ..",reply_markup =markup)
     try:
         bot.reply_to(msg,"it is good to see you well come",reply_markup =markup_inline())
     except:
-         bot.send_message(chat_id=msg.chat.id,text='sorry the website not workiing now')
+         bot.send_message(chat_id=msg.chat.id,text='sorry the website not workiing now',reply_markup =markup)
          return 0
 
-    bot.send_message(chat_id=msg.chat.id,text='select 🤞')
+    bot.send_message(chat_id=msg.chat.id,text='select 🤞',reply_markup =markup)
 
 @bot.callback_query_handler(func=lambda message : True)
 def callback_query(call):
@@ -105,8 +108,10 @@ def callback_query(call):
                 )
     bot.send_message(chat_id=call.from_user.id,text=da.split("=")[-1],reply_markup=markup)
     
-bot.polling()
+
 
 @bot.message_handler(commands=['help'])
 def helpmessage(msg):
     bot.send_message(chat_id=msg.chat.id,text='please enter jobcategory command one you inter press the button what you want\n\n\n thanx')
+
+bot.polling()
