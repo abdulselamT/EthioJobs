@@ -1,6 +1,5 @@
 aenum==2.2.6
 APScheduler==3.6.3
-apt-xapian-index==0.49
 asgiref==3.5.0
 asttokens==2.0.5
 attrs==21.4.0
