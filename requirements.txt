@@ -1,0 +1,17 @@
+beautifulsoup4==4.11.1
+
+httpcore==0.9.1
+httplib2==0.20.2
+httpx==0.13.3
+hyperframe==5.2.0
+idna==2.10
+importlib-metadata==4.6.4
+lxml==4.9.0
+
+requests==2.28.0
+
+telebot==0.0.4
+tornado==6.1
+
+urllib3==1.26.9
+
