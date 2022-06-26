@@ -77,7 +77,12 @@ def send_welcome(msg):
     btn1 = types.KeyboardButton("/jobcategory")
     btn3 = types.KeyboardButton("/help")
     bot.reply_to(msg,"loading ..",reply_markup =markup)
-    bot.reply_to(msg,"it is good to see you well come",reply_markup =markup_inline())
+    try:
+        bot.reply_to(msg,"it is good to see you well come",reply_markup =markup_inline())
+    except:
+         bot.send_message(chat_id=msg.chat.id,text='sorry the website not workiing now')
+         return 0
+
     bot.send_message(chat_id=msg.chat.id,text='select 🤞')
 
 @bot.callback_query_handler(func=lambda message : True)
