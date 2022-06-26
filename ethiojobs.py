@@ -5,7 +5,6 @@ from bs4 import BeautifulSoup
 from datetime import datetime
 from telebot.types import InlineKeyboardMarkup,InlineKeyboardButton
 from constants import API_KEY
-import prettytable as pt
 from telegram import ParseMode
 from telegram.ext import *
 import requests
