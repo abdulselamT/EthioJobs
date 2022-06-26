@@ -1,1 +1,1 @@
-worker : python ethiojobs.py
+worker: python ethiojobs.py
