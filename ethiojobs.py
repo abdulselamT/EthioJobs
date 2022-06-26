@@ -5,11 +5,9 @@ from bs4 import BeautifulSoup
 from datetime import datetime
 from telebot.types import InlineKeyboardMarkup,InlineKeyboardButton
 from constants import API_KEY
-import prettytable as pt
 from telegram import ParseMode
 from telegram.ext import *
 import requests
-import json
 bot = telebot.TeleBot(API_KEY,parse_mode=None)
 headers ={'User-Agent':'Mozilla/5.0 (X11; Linux x86_64; rv:101.0) Gecko/20100101 Firefox/101.0'}
 
