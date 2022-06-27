@@ -1,3 +1,4 @@
+
 from datetime import datetime
 import telebot
 from telebot import types
@@ -46,7 +47,7 @@ def markup_inline():
 
     return markup
 
-def generate_info(lin,user_id,k):
+def generate_info(lin,user_id,k,d):
     lin+='?listings_per_page=5&view=list&page='+k
     if lin[0]=='a':
         lin='https://www.ethiojobs.net/find-jobs-in-ethiopia'+lin[1:]
@@ -55,6 +56,12 @@ def generate_info(lin,user_id,k):
     html_text = requests.get(lin,headers=headers).text
     soup =BeautifulSoup(html_text,'lxml')
     jobs=soup.find_all(class_ ="listing-section")
+
+    markup = types.ReplyKeyboardMarkup(row_width=2,resize_keyboard=True)
+    btn1 = types.KeyboardButton("/jobcategory")
+    btn3 = types.KeyboardButton("/help")
+    markup.add(btn1,btn3)
+    
     for job in jobs :
         title = job.find('h2').text.strip()
         company_name =job.find(class_ ="company-name").text.strip()
@@ -68,7 +75,22 @@ def generate_info(lin,user_id,k):
         level=job.find_all(class_='captions-field')[-2].text.strip()
         viewDetails=job.find(class_='viewDetails').a['href']
         tet="  "+title+ "\ncompany :-> " + company_name +'\nwork_place :-> ' + work_place + '\nlevel  :-> ' + level +'\nDeadline_date :->  ' +Deadline_date +'\nview details ->' + viewDetails
-        bot.send_message(chat_id=user_id,text=tet)
+        bot.send_message(chat_id=user_id,text=tet,reply_markup=markup)
+        
+    a=d
+    try:
+          print("it is working")
+          bot.delete_message(chat_id=user_id, message_id=a-1)
+          bot.delete_message(chat_id=user_id, message_id=a-2)
+          bot.delete_message(chat_id=user_id, message_id=a-3)
+          bot.delete_message(chat_id=user_id, message_id=a-4)
+          bot.delete_message(chat_id=user_id, message_id=a-5)
+          bot.delete_message(chat_id=user_id, message_id=a-6)
+    except:
+        print(a)
+        pass
+
+
 
 @bot.message_handler(commands=['start','jobcategory'])
 def send_welcome(msg):
@@ -92,20 +114,29 @@ def callback_query(call):
     if  da[-1] not in '0123456789':
         da +='=1'
     x=da.split('=')
-    generate_info(da,call.from_user.id,x[-1])
+    y=x[:]
+    generate_info(da,call.from_user.id,x[-1],call.message.id)
    
     a=str(int(x[-1])+1)
-    
+    pre=str(int(x[-1])-1)
+   
+    if int(x[-1]) <= 1:
+        pre='1'
     x.pop()
+    y.pop()
     x.append(a)
+    y.append(pre)
     da="=".join(x)
-    
+    ad="=".join(y)
+     
     markup = InlineKeyboardMarkup()
     markup.width =1
     markup.add(
                 InlineKeyboardButton('######### Next ###############',callback_data=da),
+                InlineKeyboardButton('######### previous ###############',callback_data=ad),
                 )
     bot.send_message(chat_id=call.from_user.id,text=da.split("=")[-1],reply_markup=markup)
+    
     
 
 
