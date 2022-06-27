@@ -135,7 +135,7 @@ def callback_query(call):
                 InlineKeyboardButton('######### Next ###############',callback_data=da),
                 InlineKeyboardButton('######### previous ###############',callback_data=ad),
                 )
-    bot.send_message(chat_id=call.from_user.id,text=da.split("=")[-1],reply_markup=markup)
+    bot.send_message(chat_id=call.from_user.id,text=int(da.split("=")[-1])-1,reply_markup=markup)
     
     
 
