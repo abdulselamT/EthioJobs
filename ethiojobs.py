@@ -72,7 +72,7 @@ def generate_info(lin,user_id,k):
 
 @bot.message_handler(commands=['start','jobcategory'])
 def send_welcome(msg):
-    markup = types.ReplyKeyboardMarkup(row_width=2)
+    markup = types.ReplyKeyboardMarkup(row_width=2,resize_keyboard=True)
     btn1 = types.KeyboardButton("/jobcategory")
     btn3 = types.KeyboardButton("/help")
     markup.add(btn1,btn3)
