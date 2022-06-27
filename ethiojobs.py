@@ -56,12 +56,6 @@ def generate_info(lin,user_id,k,d):
     html_text = requests.get(lin,headers=headers).text
     soup =BeautifulSoup(html_text,'lxml')
     jobs=soup.find_all(class_ ="listing-section")
-
-    markup = types.ReplyKeyboardMarkup(row_width=2,resize_keyboard=True)
-    btn1 = types.KeyboardButton("/jobcategory")
-    btn3 = types.KeyboardButton("/help")
-    markup.add(btn1,btn3)
-    
     for job in jobs :
         title = job.find('h2').text.strip()
         company_name =job.find(class_ ="company-name").text.strip()
@@ -75,38 +69,31 @@ def generate_info(lin,user_id,k,d):
         level=job.find_all(class_='captions-field')[-2].text.strip()
         viewDetails=job.find(class_='viewDetails').a['href']
         tet="  "+title+ "\ncompany :-> " + company_name +'\nwork_place :-> ' + work_place + '\nlevel  :-> ' + level +'\nDeadline_date :->  ' +Deadline_date +'\nview details ->' + viewDetails
-        bot.send_message(chat_id=user_id,text=tet,reply_markup=markup)
+        bot.send_message(chat_id=user_id,text=tet)
         
     a=d
     try:
-          print("it is working")
           bot.delete_message(chat_id=user_id, message_id=a-1)
           bot.delete_message(chat_id=user_id, message_id=a-2)
           bot.delete_message(chat_id=user_id, message_id=a-3)
           bot.delete_message(chat_id=user_id, message_id=a-4)
           bot.delete_message(chat_id=user_id, message_id=a-5)
           bot.delete_message(chat_id=user_id, message_id=a-6)
+          bot.delete_message(chat_id=user_id, message_id=a-7)
+          bot.delete_message(chat_id=user_id, message_id=a-8)
     except:
-        print(a)
         pass
 
 
 
 @bot.message_handler(commands=['start','jobcategory'])
 def send_welcome(msg):
-    markup = types.ReplyKeyboardMarkup(row_width=2,resize_keyboard=True)
-    btn1 = types.KeyboardButton("/jobcategory")
-    btn3 = types.KeyboardButton("/help")
-    markup.add(btn1,btn3)
-    bot.reply_to(msg,"loading ..",reply_markup =markup)
+    bot.send_message(chat_id=msg.chat.id,text="loading ...")
     try:
         bot.reply_to(msg,"it is good to see you well come",reply_markup =markup_inline())
     except:
-         bot.send_message(chat_id=msg.chat.id,text='sorry the website not workiing now',reply_markup =markup)
+         bot.send_message(chat_id=msg.chat.id,text='sorry the website not workiing now')
          return 0
-
-    bot.send_message(chat_id=msg.chat.id,text='select 🤞',reply_markup =markup)
-
 @bot.callback_query_handler(func=lambda message : True)
 def callback_query(call):
     da=call.data[:]
@@ -142,6 +129,6 @@ def callback_query(call):
 
 @bot.message_handler(commands=['help'])
 def helpmessage(msg):
-    bot.send_message(chat_id=msg.chat.id,text='please enter jobcategory command one you inter press the button what you want\n\n\n thanx')
+    bot.send_message(chat_id=msg.chat.id,text='please tap menu and select jobcategory command one you inter tap the button what you want\n\n\n thanx')
 
 bot.polling()
