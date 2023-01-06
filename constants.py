@@ -1,2 +1,3 @@
-API_KEY ="5566766322:AAHPZWQuY9sWqacS4RzZ5XWypvy6aF2ipEA"
+#register here your Api key
+API_KEY =""
 
